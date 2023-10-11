@@ -4,7 +4,7 @@ can.width = 300;
 can.height = 300;
 can.style.background = "#aaa";
 
-const FPS = 100;
+const FPS = 1000000;
 
 let crashCount = 0;
 
@@ -36,8 +36,6 @@ class Block {
 }
 
 function getSpeed(m1, v1, m2, v2) {
-    // const V1 = (m2 * (-v1 + 2 * v2) + v1 * m1) / (m1 + m2);
-    // const V2 = (m1 * (2 * v1 - v2) + v2 * m2) / (m1 + m2);
     return {
         v1: (m2 * (-v1 + 2 * v2) + v1 * m1) / (m1 + m2),
         v2: (m1 * (2 * v1 - v2) + v2 * m2) / (m1 + m2)
@@ -46,17 +44,13 @@ function getSpeed(m1, v1, m2, v2) {
 
 
 const block1 = new Block(100, 300, 20, 0, 1);
-const block2 = new Block(200, 300, 80, -200, 1);
+const block2 = new Block(200, 300, 80, -200, 1000000);
 
 function crashCalcultion() {
     if (block1.x - block1.size2 + block1.speed2 < 0) {
         block1.speed *= -1;
 
         crashCount++;
-    }
-
-    else if (block2.x - block2.size2 + block2.speed2 < block1.size) {
-        block2.speed *= -1;
     }
 
     else if (block2.x - block2.size2 + block2.speed2 < block1.x + block1.size2 + block1.speed2) {
@@ -74,7 +68,7 @@ function crashCalcultion() {
 function mainLoop() {
     con.clearRect(0, 0, can.width, can.height);
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 10000; i++) {
         crashCalcultion();
     }
 
